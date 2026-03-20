@@ -24,9 +24,8 @@ TASKS = {
 
 
 def print_menu():
-    print("\n" + "=" * 50)
-    print("       МЕНЮ ЗАДАЧ — Саргсян Татев ИВТ-23")
-    print("=" * 50)
+    print("Задачки")
+
     for key, (title, _) in TASKS.items():
         print(f"  {key}. {title}")
     print("  0. Выход")
@@ -52,21 +51,21 @@ def main():
         choice = input("\nВыберите задание: ").strip().upper()
 
         if choice == "0":
-            print("До свидания!")
+            print("Завершение")
             break
         elif choice == "A":
             run_all()
         elif choice in TASKS:
             title, func = TASKS[choice]
-            print(f"\n{'=' * 50}")
+            print(f"\n{'=' * 20}")
             print(f"  ЗАДАНИЕ {choice}: {title}")
-            print("=" * 50)
+            print("=" * 20)
             try:
                 func()
             except Exception as e:
                 print(f"  [Ошибка]: {e}")
         else:
-            print("  Неверный выбор. Попробуйте снова.")
+            print("Другое")
 
 
 if __name__ == "__main__":
