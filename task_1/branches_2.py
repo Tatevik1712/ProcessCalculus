@@ -7,7 +7,10 @@ def compute(x: float, y: float, z: float) -> float:
     """
     a = x + y + z / 2
     b = x * y * z
-    return max(a, b) ** 2 + 1
+    if a > b:
+        return a ** 2 + 1
+    else:
+        return b ** 2 + 1
 
 
 def main():
@@ -18,7 +21,13 @@ def main():
 
     a = x + y + z / 2
     b = x * y * z
+    maximum = a if a > b else b
+
     print(f"  x + y + z/2 = {a}")
     print(f"  xyz         = {b}")
-    print(f"  max         = {max(a, b)}")
+    print(f"  max         = {maximum}")
     print(f"  Результат   = {compute(x, y, z)}")
+
+
+if __name__ == "__main__":
+    main()

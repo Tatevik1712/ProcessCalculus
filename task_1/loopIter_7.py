@@ -5,7 +5,7 @@ import math
 def compute_sum(n: int, x: float) -> float:
     result = 0
     for k in range(1, n + 1):
-        numerator = math.factorial(2 * k) + abs(x)
+        numerator = math.factorial(2 * k) + abs(x) # оптимизация факториала
         denominator = math.factorial(k ** 2)
         result += numerator / denominator
     return result
