@@ -1,11 +1,6 @@
+__author__ = "Саргсян Татев ИВТ-23"
 """
 Анализ COVID-19 данных через pandas
-
-Функциональность:
-1. Загрузка данных WHO
-2. Фильтрация по странам
-3. Построение графиков заражений и смертности
-
 """
 
 import pandas as pd
@@ -87,9 +82,6 @@ def plot_deaths(df: pd.DataFrame, countries: list):
 
 
 def main():
-    """
-    Главная функция
-    """
     url = "https://srhdpeuwpubsa.blob.core.windows.net/whdh/COVID/WHO-COVID-19-global-data.csv"
 
     df = load_data(url)

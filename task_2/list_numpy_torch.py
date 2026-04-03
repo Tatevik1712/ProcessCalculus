@@ -1,3 +1,5 @@
+__author__ = "Саргсян Татев ИВТ-23"
+
 """
 Сравниваются:
 1. NumPy (CPU)
@@ -22,7 +24,6 @@ def average_time_cpu(func, *args, repeats=5):
         start = time.perf_counter()
         func(*args)
         end = time.perf_counter()
-
         times.append(end - start)
 
     return sum(times) / len(times)
@@ -37,7 +38,6 @@ def average_time_gpu(func, *args, repeats=5):
     for _ in range(repeats):
         torch.cuda.synchronize()
         start = time.perf_counter()
-
         func(*args)
 
         torch.cuda.synchronize()
