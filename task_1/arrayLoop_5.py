@@ -12,7 +12,7 @@ def alternating_sum(a: list) -> float:
     result = 0
     for i in range(len(a)):
         result += ((-1) ** i) * a[i]   # чётный индекс → «+», нечётный → «−»
-    return round(result, 2)
+    return result
 
 
 def input_array(n: int) -> list:
