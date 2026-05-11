@@ -17,9 +17,9 @@ def solve_linear_system(A: np.ndarray) -> np.ndarray:
     :return: решение x
     """
     n = A.shape[0]
-    b = np.random.rand(n)
+    b = np.random.rand(n) # rand генерирует числа, где каждое значение в диапазоне от 0 до 1 имеет одинаковую вероятност
 
-    x = np.linalg.solve(A, b)
+    x = np.linalg.solve(A, b) # linalg.solve - решает систему линейных алгебраических уравнений (СЛАУ)
 
     print("Матрица A:\n", A)
     print("Вектор b:\n", b)

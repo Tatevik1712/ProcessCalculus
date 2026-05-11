@@ -11,6 +11,10 @@ def plot_heatmap(matrix: np.ndarray) -> None:
     """
     plt.figure()
     sns.heatmap(matrix, annot=False)
+    # Команда sns.heatmap(matrix, annot=False) строит тепловую карту (heatmap)
+    # на основе данных matrix (обычно DataFrame или массив), отображая значения цветом.
+    # Параметр annot=False отключает отображение числовых значений внутри ячеек,
+    # оставляя только цветовую визуализацию для быстрого анализа трендов.
     plt.title("Heatmap матрицы")
     plt.show()
 
@@ -34,7 +38,7 @@ def plot_functions() -> None:
     """
     Строит функцию и ту же функцию с шумом
     """
-    x = np.linspace(0, 10, 100)
+    x = np.linspace(0, 10, 100) #numpy массив
 
     # базовая функция
     y = np.sin(x) * np.exp(-x / 5)

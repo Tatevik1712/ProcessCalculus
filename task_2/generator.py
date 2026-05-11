@@ -19,7 +19,6 @@ def sequence_generator(n: int):
         if i == 1:
             yield term
         else:
-            # рекуррентная формула:
             # b_i = b_(i-1) * 2 / i
             term = term * 2 / i
             yield term
@@ -31,7 +30,6 @@ def main():
     """
     n = int(input("Введите n: "))
     print(f"Последовательность b_i для n = {n}:")
-
     for i, value in enumerate(sequence_generator(n), start=1):
         print(f"b{i} = {value}")
 

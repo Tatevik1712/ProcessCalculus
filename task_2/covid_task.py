@@ -9,7 +9,7 @@ import ssl
 
 def load_data(url: str):
     """
-    Загружает CSV данные (с отключенной SSL проверкой)
+    Загрузка CSV данных
     """
     ssl._create_default_https_context = ssl._create_unverified_context
 
