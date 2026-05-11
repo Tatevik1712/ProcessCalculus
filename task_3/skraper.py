@@ -6,13 +6,18 @@
  - [ + ] разбейте программу на функции
  - [ + ] сохраняете данные в Pandas DataFrame
  - [ + ] программа сохраняет дату и теги новости +1
- - [ + ] программа сохраняет текст новости +1
+ - [ - ] программа сохраняет текст новости +1
+"""
 
-Для получения данных со страницы используйте библиотеку requests"""
+"""
+Отправка запроса: Скрапер заходит на сайт, как обычный пользователь
+Получение HTML: Скрапер скачивает содержимое страницы
+Парсинг: Парсер анализирует код, находит нужные данные по тегам
+"""
 
 import requests
 import pandas as pd
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup #библиотека для парсинга
 import time
 
 
@@ -31,15 +36,21 @@ def get_html(url: str) -> str:
         print(f"Ошибка при запросе: {response.status_code}")
         return ""
 
-
+#исправить. не рабочий
 def parse_article_page(url: str) -> str:
     """
-    Получает текст конкретной статьи.
+    Получает текст конкретной статьи
     """
     html = get_html(url)
     soup = BeautifulSoup(html, "html.parser")
+    #BeautifulSoup(...): Конструктор класса, который принимает HTML-контент и создает объект для его анализа
+    # html: Первый аргумент — это переменная, содержащая HTML-код (обычно текст, полученный через библиотеку requests).
+    # "html.parser": Второй аргумент указывает метод (парсер), который будет использоваться для разбора.
 
     article = soup.find("div", class_="tm-article-body")
+    #"div": Первый аргумент указывает тип HTML-тега, который мы ищем. В данном случае — <div> (блок).
+    # class_="tm-article-body": Это критерий поиска — атрибут тега.
+    # Мы ищем <div>, у которого CSS-класс равен "tm-article-body".
 
     if article:
         return article.get_text(strip=True)
@@ -48,8 +59,8 @@ def parse_article_page(url: str) -> str:
 
 def parse_page(html: str) -> list:
     """
-    Парсит одну страницу со списком статей.
-    Возвращает список словарей с данными.
+    Парсит одну страницу со списком статей
+    Возвращает список словарей с данными
     """
     soup = BeautifulSoup(html, "html.parser")
     articles = soup.find_all("article")
@@ -71,7 +82,7 @@ def parse_page(html: str) -> list:
             tags = article.find_all("a", class_="tm-publication-hub__link")
             tags_list = [tag.text.strip() for tag in tags]
 
-            # Текст статьи (доп. задание)
+            # Текст статьи (пока не рабочий)
             text = parse_article_page(link)
 
             data.append({
@@ -92,8 +103,8 @@ def parse_page(html: str) -> list:
 
 def scraper(pages: int = 3) -> pd.DataFrame:
     """
-    Основная функция парсинга.
-    Проходит по нескольким страницам.
+    Основная функция парсинга
+    Проходит по нескольким страницам
     """
     all_data = []
 
