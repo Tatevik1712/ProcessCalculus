@@ -24,12 +24,12 @@ def run_scraper(max_pages: int = 3) -> pd.DataFrame:
     all_results = []
 
     for page in range(1, max_pages + 1):
-        print(f"\n--- Обработка страницы {page} ---")
+        print(f"\n Обработка страницы {page}")
         url = HABR_PAGES_URL.format(page)
 
         html = get_html(url)
         if not html:
-            print(f"Пропуск страницы {page} из-за ошибки доступа.")
+            print(f"Пропуск страницы {page} из-за ошибки доступа")
             continue
 
         page_data = parse_habr_page(html)
@@ -48,7 +48,6 @@ def run_scraper(max_pages: int = 3) -> pd.DataFrame:
 if __name__ == "__main__":
     print("Запуск сбора новостей")
 
-    # Собираем данные (для теста выставим 2 страницы)
     result_df = run_scraper(max_pages=2)
 
     if not result_df.empty:

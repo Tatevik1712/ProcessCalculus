@@ -12,3 +12,9 @@ MAX_DELAY = 4.5
 
 HABR_BASE_URL = "https://habr.com"
 HABR_PAGES_URL = "https://habr.com/ru/all/page{}/"
+
+BASE_URL = "https://zabgu.ru"
+START_URL = "https://zabgu.ru/php/news.php?category=1&page="
+
+# Максимальное время ожидания ответа от сервера
+TIMEOUT = 10
