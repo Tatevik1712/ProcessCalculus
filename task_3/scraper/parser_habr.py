@@ -8,11 +8,13 @@ from config import HABR_BASE_URL
 
 def parse_article_body(url: str) -> str:
     """
-    Заходит на страницу статьи и забирает полный текст
+    Заходит на страницу статьи и забирает полный текст.
+    Ищет строго в двух местах. Он проверяет класс tm-article-body,
+    а если его нет — article-formatted-body
     """
     html = get_html(url)
     if not html:
-        return ""
+        return "Не удалось загрузить страницу"
 
     soup = BeautifulSoup(html, "html.parser")
     # BeautifulSoup(...): Конструктор класса, который принимает HTML-контент и создает объект для его анализа
@@ -30,12 +32,12 @@ def parse_article_body(url: str) -> str:
 
     if article_body:
         return article_body.get_text(separator="\n", strip=True)
-    return ""
+    return "Текст новости не найден"
 
 
 def parse_habr_page(html: str) -> list:
     """
-    Парсит превью-страницу со списком статей.
+    Парсит превью-страницу со списком статей
     """
     soup = BeautifulSoup(html, "html.parser")
     articles = soup.find_all("article")
@@ -69,7 +71,7 @@ def parse_habr_page(html: str) -> list:
                 "text": text,
                 "link": link
             })
-            print(f"[Успех] Спарсено: {title[:40]}...")
+            print(f"Спарсено: {title[:40]}...")
 
         except Exception as e:
             print(f"[Ошибка парсинга элемента]: {e}")

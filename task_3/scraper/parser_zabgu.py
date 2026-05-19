@@ -3,13 +3,16 @@
 """
 from bs4 import BeautifulSoup
 from network import get_html
-from config import BASE_URL
+from config import BASE_URL, MIN_DELAY, MAX_DELAY
 import time
 import random
 
 def parse_article_text(article_url: str) -> str:
     """
     Переходит на страницу новости и извлекает полный текст публикации.
+    Ищет гораздо шире. Он перебирает не только разные классы (news-text,
+    content), но и разные типы тегов: блоки <div>, ячейки таблиц <td>,
+    а также поиск по уникальному идентификатору id="content"
     """
     html = get_html(article_url)
     if not html:
@@ -42,7 +45,7 @@ def parse_zabgu_page(html: str) -> list:
     soup = BeautifulSoup(html, "html.parser")
     page_data = []
 
-    # Шаг 1: Ищем ссылки на новости. На ЗабГУ ссылки на полные новости обычно
+    # Сначала собирает вообще все ссылки на странице. Ищем ссылки на новости. На ЗабГУ ссылки на полные новости обычно
     # содержат в URL подстроку "news.php?id=" или "category="
     all_links = soup.find_all("a")
     valid_news_links = []
@@ -55,7 +58,7 @@ def parse_zabgu_page(html: str) -> list:
             if len(a.text.strip()) > 10:
                 valid_news_links.append(a)
 
-    # Если через ссылки не нашли, пробуем старый способ с блоками
+    # Если по ссылкам ничего найти не удалось, ищем старым блочным методом
     if not valid_news_links:
         news_items = soup.find_all("div", class_="news-item") or soup.find_all("div", class_="news")
         for item in news_items:
@@ -63,7 +66,7 @@ def parse_zabgu_page(html: str) -> list:
             if link_tag:
                 valid_news_links.append(link_tag)
 
-    # Шаг 2: Обрабатываем собранные элементы
+    # Обработка собранных элементов
     for title_tag in valid_news_links:
         try:
             title = title_tag.text.strip()
@@ -82,7 +85,7 @@ def parse_zabgu_page(html: str) -> list:
             tags = [category_tag.text.strip()] if category_tag else ["Общие новости"]
 
             # Парсинг тела новости
-            print(f"[Сбор текста] Переход по ссылке: {title[:40]}...")
+            print(f"Сбор текста. Переход по ссылке: {title[:40]}...")
             text = parse_article_text(link)
 
             page_data.append({
@@ -93,10 +96,10 @@ def parse_zabgu_page(html: str) -> list:
                 "link": link
             })
 
-            # Микро-пауза между статьями
-            time.sleep(random.uniform(0.3, 1.0))
+            # пауза между статьями
+            time.sleep(random.uniform(MIN_DELAY, MAX_DELAY))
 
         except Exception as e:
-            print(f"[Ошибка парсинга элемента]: {e}")
+            print(f"Ошибка парсинга элемента: {e}")
 
     return page_data
