@@ -1,17 +1,13 @@
 __author__ = "Саргсян Татев"
 
-"""
-Импортирует все функции из async_functions и запускает замеры
-"""
-
-from async_task.async_func import benchmark, get_urls
+from async_task.config import get_urls
+from async_task.benchmarking import benchmark
 
 def main() -> None:
-    RUNS   = 3
+    RUNS = 3
     N_MAIN = 5
 
     urls = get_urls(N_MAIN)
-
 
     print(f"  Запросов: {N_MAIN}  Прогонов: {RUNS}")
 
@@ -29,11 +25,8 @@ def main() -> None:
     print(f"  Ускорение (по медиане):   {speedup_med:.1f}x")
 
 
-
 if __name__ == "__main__":
     main()
-
-
 
 
 
